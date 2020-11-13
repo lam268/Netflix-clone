@@ -22,7 +22,6 @@ const app = express()
 
  
 app.set('view engine', 'ejs');
-app.use(expressLayouts);
 app.use(morgan('dev'))
 app.use(bodyParser.urlencoded({ extended: true}))
 app.use(bodyParser.json())
