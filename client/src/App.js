@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import logo from './logo.svg';
-import './App.css';
+import './css/App.css'
+import Main from './pages'
+import { Switch, Route } from 'react-router-dom';
 
 class App extends Component {
   constructor(props) {
@@ -8,26 +9,11 @@ class App extends Component {
     this.state = { apiResponse: "" };
   }
 
-  callAPI() {
-    fetch("http://localhost:9000/testAPI")
-      .then(res => res.text())
-      .then(res => this.setState({ apiResponse: res }))
-      .catch(err => err);
-  }
-
-  componentDidMount() {
-    this.callAPI();
-  }
-
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-            <img src={logo} className="App-logo" alt="logo"></img>
-            <h1 className="App-title">Welcome to React</h1>
-        </header>
-    <p className="App-intro">{this.state.apiResponse}</p>
-      </div>
+      <Switch>
+        <Route path = "/" component = {Main} />
+      </Switch>
     )
   }
 }
