@@ -11,7 +11,7 @@ function Header() {
         <HeaderComponent className="header-container">
             <div className="header-top">
                 <Logo src={logo} />
-                <NavLink to='/sign_in' className="signIn-btn">Sign In</NavLink>
+                <NavLink to='/login' className="signIn-btn">Sign In</NavLink>
             </div>
             <div className="header-content">
                 <Title>See what's next</Title>
