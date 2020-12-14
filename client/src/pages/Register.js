@@ -1,24 +1,24 @@
 import React, { Component } from 'react';
 import logo from '../svg/logo.svg'
 import styled from 'styled-components'
-import LoginForm from '../login/LoginForm'
-import LoginFooter from '../login/LoginFooter'
+import RegisterForm from '../register/RegisterForm'
+import RegisterFooter from '../register/RegisterFooter'
 
-class Login extends Component {
+class Register extends Component {
     render() {
         return (
             <div className="main-login-container">
                 <div className="header-top">
                     <Logo src={logo} alt="logo" className="logo"/>
                 </div>
-                <LoginForm />
-                <LoginFooter />
+                <RegisterForm />
+                <RegisterFooter />
             </div>
         )
     }
 }
 
-export default Login;
+export default Register;
 
 const Logo = styled.img`
     width: 11rem;

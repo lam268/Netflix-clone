@@ -1,120 +1,45 @@
-import React, { Component } from 'react';
-import styled from 'styled-components';
-import {Link} from 'react-router-dom';
+import React, { Component } from 'react'
+import styled from 'styled-components'
 
-const regexp = RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/);
-
-const initState = {
-    checked: true,
-    email: '',
-    password: '',
-    emailError: '',
-    passwordError: ''
-}
-
-class LoginForm extends Component {
-    state = initState;
-
-    handleEmailChange = e => {
-        this.setState({
-            email: e.target.value
-        });
-    };
-
-    handlePasswordChange = e => {
-        this.setState({
-            password: e.target.value
-        });
-    };
-
-    validate = () => {
-        let inputError = false;
-        const errors = {
-            emailError: '',
-            passwordError: ''
-        };
-
-        if (!this.state.email) {
-            inputError = true;
-            errors.emailError = 'Please enter a valid email'
-        } else if (!this.state.email.match(regexp)) {
-            inputError = true;
-            errors.emailError = (
-                <span style = {{ color: 'red'}}> Your email address must be valid</span>
-            )
-        }
-
-        if (this.state.password.length < 4){
-            inputError = true;
-            errors.passwordError = 'Your password must be contains between 4 and 40 characters'
-        }
-
-        this.setState({
-            ...errors
-        })
-
-        return inputError;
-    }
-
-    onSubmit = e => {
-        e.preventDefault();
-
-        const err = this.validate();
-
-        if (!err) {
-            this.setState(initState);
-        }
-    }
-
-    handelcheckbox = e => {
-        this.setState({
-            checked: e.target.checked
-        })
-    }
-
+export default class RegisterForm extends Component {
     render() {
         return (
             <FormContainer>
                 <div className="form-container">
                     <form>
-                        <h1>Sign in</h1>
+                        <h1>Sign up</h1>
                         <div className="input-container">
-                            <input className={this.state.emailError ? 'input-error input-empty' : 'input-empty'} type="email" 
-                            onChange = {this.handleEmailChange}
-                            value = {this.state.e}
+                            <input className= 'input-empty' type="text" 
+                            required />
+                            <label>First Name</label>
+                        </div>
+                        <div className="input-container">
+                            <input className= 'input-empty' type="text" 
+                            required />
+                            <label>Last Name</label>
+                        </div>
+                        <div className="input-container">
+                            <input className= 'input-empty' type="email" 
                             required />
                             <label>Email or Phone Number</label>
-                            <span style = {{ color: '#db7302'}}>{this.state.emailError}</span>
                         </div>
                         <div className="input-container">
-                            <input className={this.state.emailError ? 'input-error input-empty' : 'input-empty'} type="password" 
-                            onChange = {this.handlePasswordChange}
+                            <input className='input-empty' type="password" 
                             required />
-                            <label>Password</label>
-                            <span style = {{ color: '#db7302'}}>{this.state.passwordError}</span>
+                            <label>Password</label>                           
                         </div>
                         <div className="input-container">
-                            <Button href="/" type="submit" onCLick = {e => this.onSubmit(e)}>Sign in</Button>
+                            <Button href="/" type="submit" >Sign up</Button>
                         </div>
-                        <label className = "checkbox-container">
-                            Remember me
-                            <input type="checkbox" defaultChecked={this.state.checked}
-                            onChange={this.handelcheckbox}/>
-                            <span className="checkmark"></span>
-                        </label>
-                        <Link className = "need-help" to = "/">Need Help?</Link>
-                        <div className = "bottom-form">
-                            <span style = {{ color: '#999',fontsize: '1.1rem'}}>New to MoiFlix   </span>
-                            <Link to="/register" className="sign-up-text">Sign Up Now</Link>
-                        </div>
+                        
+            
                     </form>
                 </div>
             </FormContainer>
+
         )
     }
 }
-
-export default LoginForm;
 
 const FormContainer = styled.div`
     display: grid;
