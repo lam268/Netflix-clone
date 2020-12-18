@@ -9,6 +9,7 @@ const initState = {
     password: '',
     emailError: '',
     passwordError: '',
+    nameError: '',
 }
 
 export default class RegisterForm extends Component {
@@ -39,9 +40,12 @@ export default class RegisterForm extends Component {
             emailError: '',
             passwordError: ''
         };
-
+        if (!this.state.name) {
+            inputError = true;
+            errors.namedError = "Please enter name"
+        }
         if (!this.state.email) {
-            inputError = false;
+            inputError = true;
             errors.emailError = 'Please enter a valid email'
         } else if (!this.state.email.match(regexp)) {
             inputError = true;
@@ -78,6 +82,7 @@ export default class RegisterForm extends Component {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
+                name: this.state.name,
                 email: this.state.email,
                 password: this.state.password,
             }),
@@ -93,6 +98,7 @@ export default class RegisterForm extends Component {
                     });
                 } else {
                     window.localStorage.setItem('email', data.data.email);
+                    window.localStorage.setItem('name', data.data.name);
                     window.location.href = '/';
                 }
             })
