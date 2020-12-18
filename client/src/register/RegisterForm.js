@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 
+const regexp = RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/);
+
 const initState = {
     name: '',
     email: '',
@@ -31,6 +33,76 @@ export default class RegisterForm extends Component {
         });
     };
 
+    validate = () => {
+        let inputError = false;
+        const errors = {
+            emailError: '',
+            passwordError: ''
+        };
+
+        if (!this.state.email) {
+            inputError = false;
+            errors.emailError = 'Please enter a valid email'
+        } else if (!this.state.email.match(regexp)) {
+            inputError = true;
+            errors.emailError = (
+                <span style={{ color: 'red' }}> Your email address must be valid</span>
+            )
+        }
+
+        if (this.state.password.length < 4) {
+            inputError = true;
+            errors.passwordError = 'Your password must be contains between 4 and 40 characters'
+        }
+
+        this.setState({
+            ...errors
+        })
+
+        return inputError;
+    }
+
+    onSubmit = e => {
+        e.preventDefault();
+
+        const err = this.validate();
+
+        if (!err) {
+            this.setState(initState);
+        }
+
+        fetch('http://localhost:9000/api/auth/register', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: this.state.email,
+                password: this.state.password,
+            }),
+        })
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => {
+                if (!data.success) {
+                    console.log(data)
+                    this.setState({
+                        errMessage: data.message
+                    });
+                } else {
+                    window.localStorage.setItem('email', data.data.email);
+                    window.location.href = '/';
+                }
+            })
+            .catch((err) => {
+                this.setState({
+                    errMessage: err.message,
+                });
+            });
+    }
+
     render() {
         return (
             <FormContainer>
@@ -38,22 +110,27 @@ export default class RegisterForm extends Component {
                     <form>
                         <h1>Sign up</h1>
                         <div className="input-container">
-                            <input className= 'input-empty' type="text" 
+                            <input className={this.state.emailError ? 'input-error input-empty' : 'input-empty'} type="text"
+                                onChange={this.handleNameChange}
                             required />
                             <label>Name</label>
                         </div>
                         <div className="input-container">
-                            <input className= 'input-empty' type="email" 
+                            <input className={this.state.emailError ? 'input-error input-empty' : 'input-empty'} type="email"
+                                onChange={this.handleEmailChange}
                             required />
                             <label>Email or Phone Number</label>
+                            <span style={{ color: '#db7302' }}>{this.state.emailError}</span>
                         </div>
                         <div className="input-container">
-                            <input className='input-empty' type="password" 
+                            <input className={this.state.emailError ? 'input-error input-empty' : 'input-empty'} type="password"
+                                onChange={this.handlePasswordChange}
                             required />
-                            <label>Password</label>                           
+                            <label>Password</label>      
+                            <span style={{ color: '#db7302' }}>{this.state.passwordError}</span>                     
                         </div>
                         <div className="input-container">
-                            <Button href="/" type="submit" >Sign up</Button>
+                            <Button href="/" type="submit" onClick={e => this.onSubmit(e)}>Sign up</Button>
                         </div>
                         
             
