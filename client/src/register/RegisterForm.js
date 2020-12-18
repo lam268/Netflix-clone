@@ -1,7 +1,36 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 
+const initState = {
+    name: '',
+    email: '',
+    password: '',
+    emailError: '',
+    passwordError: '',
+}
+
 export default class RegisterForm extends Component {
+    
+    state = initState;
+
+    handleNameChange = e => {
+        this.setState({
+            name: e.target.value
+        });
+    };
+
+    handleEmailChange = e => {
+        this.setState({
+            email: e.target.value
+        });
+    };
+
+    handlePasswordChange = e => {
+        this.setState({
+            password: e.target.value
+        });
+    };
+
     render() {
         return (
             <FormContainer>
@@ -11,12 +40,7 @@ export default class RegisterForm extends Component {
                         <div className="input-container">
                             <input className= 'input-empty' type="text" 
                             required />
-                            <label>First Name</label>
-                        </div>
-                        <div className="input-container">
-                            <input className= 'input-empty' type="text" 
-                            required />
-                            <label>Last Name</label>
+                            <label>Name</label>
                         </div>
                         <div className="input-container">
                             <input className= 'input-empty' type="email" 

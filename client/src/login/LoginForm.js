@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const regexp = RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/);
 
@@ -35,16 +35,16 @@ class LoginForm extends Component {
         };
 
         if (!this.state.email) {
-            inputError = true;
+            inputError = false;
             errors.emailError = 'Please enter a valid email'
         } else if (!this.state.email.match(regexp)) {
             inputError = true;
             errors.emailError = (
-                <span style = {{ color: 'red'}}> Your email address must be valid</span>
+                <span style={{ color: 'red' }}> Your email address must be valid</span>
             )
         }
 
-        if (this.state.password.length < 4){
+        if (this.state.password.length < 4) {
             inputError = true;
             errors.passwordError = 'Your password must be contains between 4 and 40 characters'
         }
@@ -64,6 +64,36 @@ class LoginForm extends Component {
         if (!err) {
             this.setState(initState);
         }
+
+        fetch('http://localhost:9000/api/auth/login', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: this.state.email,
+                password: this.state.password,
+            }),
+        })
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => {
+                if (!data.success) {
+                    this.setState({
+                        errMessage: data.message
+                    });
+                } else {
+                    window.localStorage.setItem('email', data.data.email);
+                    window.location.href = '/';
+                }
+            })
+            .catch((err) => {
+                this.setState({
+                    errMessage: err.message,
+                });
+            });
     }
 
     handelcheckbox = e => {
@@ -79,32 +109,32 @@ class LoginForm extends Component {
                     <form>
                         <h1>Sign in</h1>
                         <div className="input-container">
-                            <input className={this.state.emailError ? 'input-error input-empty' : 'input-empty'} type="email" 
-                            onChange = {this.handleEmailChange}
-                            value = {this.state.e}
-                            required />
+                            <input className={this.state.emailError ? 'input-error input-empty' : 'input-empty'} type="email"
+                                onChange={this.handleEmailChange}
+                                value={this.state.e}
+                                required />
                             <label>Email or Phone Number</label>
-                            <span style = {{ color: '#db7302'}}>{this.state.emailError}</span>
+                            <span style={{ color: '#db7302' }}>{this.state.emailError}</span>
                         </div>
                         <div className="input-container">
-                            <input className={this.state.emailError ? 'input-error input-empty' : 'input-empty'} type="password" 
-                            onChange = {this.handlePasswordChange}
-                            required />
+                            <input className={this.state.emailError ? 'input-error input-empty' : 'input-empty'} type="password"
+                                onChange={this.handlePasswordChange}
+                                required />
                             <label>Password</label>
-                            <span style = {{ color: '#db7302'}}>{this.state.passwordError}</span>
+                            <span style={{ color: '#db7302' }}>{this.state.passwordError}</span>
                         </div>
                         <div className="input-container">
-                            <Button href="/" type="submit" onCLick = {e => this.onSubmit(e)}>Sign in</Button>
+                            <Button href="/" type="submit" onClick={e => this.onSubmit(e)}>Sign in</Button>
                         </div>
-                        <label className = "checkbox-container">
+                        <label className="checkbox-container">
                             Remember me
                             <input type="checkbox" defaultChecked={this.state.checked}
-                            onChange={this.handelcheckbox}/>
+                                onChange={this.handelcheckbox} />
                             <span className="checkmark"></span>
                         </label>
-                        <Link className = "need-help" to = "/">Need Help?</Link>
-                        <div className = "bottom-form">
-                            <span style = {{ color: '#999',fontsize: '1.1rem'}}>New to MoiFlix   </span>
+                        <Link className="need-help" to="/">Need Help?</Link>
+                        <div className="bottom-form">
+                            <span style={{ color: '#999', fontsize: '1.1rem' }}>New to MoiFlix   </span>
                             <Link to="/register" className="sign-up-text">Sign Up Now</Link>
                         </div>
                     </form>
@@ -230,7 +260,7 @@ const FormContainer = styled.div`
     }
 `;
 
-const Button = styled.button `
+const Button = styled.button`
     color: #fff;
     background: rgba(229, 9,20);
     border:none;
