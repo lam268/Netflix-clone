@@ -9,6 +9,8 @@ const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var testAPIrouter = require('./routes/testAPI');
@@ -60,6 +62,20 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+//testchat
+app.get("/", function (req, res) {
+  res.sendFile(path.join(__dirname + '/views/chat.html'));
+});
+
+io.on('connection', function (socket) {
+  console.log('Welcome to server chat');
+
+  socket.on('send', function (data) {
+      io.sockets.emit('send', data);
+  });
+});
+//testchat
 
 dotenv.config();
 
