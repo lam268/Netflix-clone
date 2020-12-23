@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
-const regexp = RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/);
+const regexp = RegExp(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/);
 
 const initState = {
     checked: true,
@@ -65,17 +66,18 @@ class LoginForm extends Component {
             this.setState(initState);
         }
 
-        fetch('http://localhost:9000/api/auth/login', {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                email: this.state.email,
-                password: this.state.password,
-            }),
-        })
+        // fetch('http://localhost:9000/api/auth/login', {
+        //     method: 'POST',
+        //     credentials: 'include',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify({
+        //         email: this.state.email,
+        //         password: this.state.password,
+        //     }),
+        // })
+        axios.post('http://localhost:9000/api/auth/login', initState)
             .then((res) => {
                 return res.json();
             })

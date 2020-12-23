@@ -1,5 +1,6 @@
 import React from 'react'
 import { Button } from './Buttons'
+import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
 import Imtv from '../images/tab-tv.png'
 import ImTablet from '../images/tab-tablet.png'
@@ -13,7 +14,7 @@ function TabContentTwo() {
                     <span style = {{ fontsize: '1.5rem'}}>
                         Watch TV shows and movies anytime, anywhere - personalized for you.
                 </span>
-                    <Button className="btn">try it now</Button>
+                    <NavLink to='/login' className="btn"><Button href='/login' className="btn">try it now</Button></NavLink>
                 </div>
             </div>
             <div className="tab-bottom-content">

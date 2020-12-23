@@ -97,8 +97,8 @@ export default class RegisterForm extends Component {
                         errMessage: data.message
                     });
                 } else {
-                    window.localStorage.setItem('email', data.data.email);
                     window.localStorage.setItem('name', data.data.name);
+                    window.localStorage.setItem('email', data.data.email);
                     window.location.href = '/';
                 }
             })

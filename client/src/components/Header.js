@@ -16,9 +16,11 @@ function Header() {
             <div className="header-content">
                 <Title>See what's next</Title>
                 <SubTitle>WATCH ANYWHERE. CANCEL ANYTIME</SubTitle>
+                <NavLink to='/login'>
                 <Button primary>TRY IT NOW
                 <Icon className="Icon" size = {35} icon={arrow_right}  />
                 </Button>
+                </NavLink>
             </div>
         </HeaderComponent>
     )

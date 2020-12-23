@@ -2,6 +2,7 @@ import React from 'react'
 import Img from '../images/tab-1-pic.png'
 import styled from 'styled-components'
 import { Button } from './Buttons'
+import { NavLink } from 'react-router-dom'
 
 function TabContentOne() {
     return (
@@ -13,9 +14,11 @@ function TabContentOne() {
                             If you decide to Netflix isn't for you - no problem. No commitments. Cancel online anytime.
                     </span>
                         <br />
+                        <NavLink to='/login' className="btn">
                         <Button style={{ marginTop: '2rem' }}>Try it now</Button>
+                        </NavLink>
                     </div>
-                    <img src={Img} />
+                    <img src={Img} alt = 'example'/>
                 </div>
             </div>
         </TabContentOneContainer>
