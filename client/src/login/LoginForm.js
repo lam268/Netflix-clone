@@ -66,6 +66,11 @@ class LoginForm extends Component {
             this.setState(initState);
         }
 
+        const LoginState = {
+            email: this.state.email,
+            password: this.state.password
+        }
+
         // fetch('http://localhost:9000/api/auth/login', {
         //     method: 'POST',
         //     credentials: 'include',
@@ -77,25 +82,27 @@ class LoginForm extends Component {
         //         password: this.state.password,
         //     }),
         // })
-        axios.post('http://localhost:9000/api/auth/login', initState)
-            .then((res) => {
-                return res.json();
-            })
-            .then((data) => {
-                if (!data.success) {
-                    this.setState({
-                        errMessage: data.message
-                    });
-                } else {
-                    window.localStorage.setItem('email', data.data.email);
-                    window.location.href = '/';
-                }
+        axios.post('http://localhost:9000/api/auth/login', LoginState)
+            .then(function (res) {
+                console.log(res);
             })
             .catch((err) => {
                 this.setState({
                     errMessage: err.message,
                 });
             });
+            // .then((data) => {
+            //     console.log(data);
+            //     if (!data.success) {
+            //         this.setState({
+            //             errMessage: data.message
+            //         });
+            //     } else {
+            //         window.localStorage.setItem('email', data.data.email);
+            //         window.location.href = '/';
+            //     }
+            // })
+            
     }
 
     handelcheckbox = e => {

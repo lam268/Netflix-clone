@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import axios from 'axios'
 
-const regexp = RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/);
+const regexp = RegExp(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/);
 
 const initState = {
     name: '',
@@ -75,33 +76,40 @@ export default class RegisterForm extends Component {
             this.setState(initState);
         }
 
-        fetch('http://localhost:9000/api/auth/register', {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                name: this.state.name,
-                email: this.state.email,
-                password: this.state.password,
-            }),
-        })
-            .then((res) => {
-                return res.json();
+        const registered = {
+            name: this.state.name,
+            email: this.state.email,
+            password: this.state.password
+        }
+
+        // fetch('http://localhost:9000/api/auth/register', {
+        //     method: 'POST',
+        //     credentials: 'include',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify({
+        //         name: this.state.name,
+        //         email: this.state.email,
+        //         password: this.state.password,
+        //     }),
+        // })
+        axios.post('http://localhost:9000/api/auth/register', registered)
+            .then(function (res) {
+                console.log(res.data);
             })
-            .then((data) => {
-                if (!data.success) {
-                    console.log(data)
-                    this.setState({
-                        errMessage: data.message
-                    });
-                } else {
-                    window.localStorage.setItem('name', data.data.name);
-                    window.localStorage.setItem('email', data.data.email);
-                    window.location.href = '/';
-                }
-            })
+            // .then((data) => {
+            //     if (!data.success) {
+            //         console.log(data)
+            //         this.setState({
+            //             errMessage: data.message
+            //         });
+            //     } else {
+            //         window.localStorage.setItem('name', data.data.name);
+            //         window.localStorage.setItem('email', data.data.email);
+            //         window.location.href = '/';
+            //     }
+            // })
             .catch((err) => {
                 this.setState({
                     errMessage: err.message,
