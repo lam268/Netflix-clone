@@ -9,8 +9,8 @@ import ImMac from '../images/tab-macbook.png'
 function TabContentTwo() {
     return (
         <TabContentTwoContainer>
-            <div class="tab-content">
-                <div class="tab-top-content">
+            <div className="tab-content">
+                <div className="tab-top-content">
                     <span style = {{ fontsize: '1.5rem'}}>
                         Watch TV shows and movies anytime, anywhere - personalized for you.
                 </span>

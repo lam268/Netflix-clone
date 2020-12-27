@@ -3,8 +3,9 @@ import { Tab, Tabs, TabList , TabPanel} from 'react-tabs';
 import TabDoor from './TabDoor';
 import TabDevices from './TabDevices';
 import TabPrice from './TabPrice';
-import TabContentOne from './TaBContentOne'
+import TabContentOne from './TabContentOne'
 import TabContentTwo from './TabContentTwo'
+import TabContentThree from './TabContentThree'
 import '../css/Tabs.css';
 
 
@@ -33,6 +34,9 @@ class TabComponent extends Component {
                     </TabPanel>
                     <TabPanel>
                         <TabContentTwo/>
+                    </TabPanel>
+                    <TabPanel>
+                        <TabContentThree/>
                     </TabPanel>
                 </Tabs>
             </div>

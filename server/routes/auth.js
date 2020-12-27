@@ -5,6 +5,14 @@ const router = express.Router();
 const User = require('./../models/Users');
 const { registerValidator } = require('./../validations/auth');
 
+router.get('/test', async (request, response) => {
+    console.log('Current User:', request.session.currentUser);
+
+    response.json({
+        success: true,
+    });
+});
+
 router.post('/register', async (request, response) => {
     const { error } = registerValidator(request.body);
 
@@ -22,6 +30,12 @@ router.post('/register', async (request, response) => {
         email: request.body.email,
         password: hashPassword,
     });
+
+    request.session.currentUser = {
+        _id: user._id,
+        name: user.name,
+        email: user.email   
+    };
 
     try {
         const newUser = await user.save();
@@ -42,16 +56,39 @@ router.post('/login', async (request, response) => {
 
     if (!checkPassword) return response.status(422).send('Email or Password is not correct');
     const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET, { expiresIn: 60 * 60 * 24 });
-    
+
+    request.session.currentUser = {
+        _id: user._id,
+        name: user.name,
+        email: user.email   
+    };
+
     return response.status(200).send({
         token,
         user: {
             _id: user._id,
-            name: user.name, 
+            name: user.name,
             email: user.email
         },
         message: 'Login successful'
     });
 });
+
+router.get('/logout', async (request, response) => {
+    response.cookie('jwt', '')
+    request.session.destroy((err) => {
+        if (err) {
+            response.status(500).json({
+              success: false,
+              message: err.message,
+            });
+          } else {
+            response.status(200).json({
+              success: true,
+              message: 'Logout success',
+            });
+          }
+    })
+})
 
 module.exports = router;

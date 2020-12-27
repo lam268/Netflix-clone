@@ -14,7 +14,7 @@ const initState = {
 }
 
 export default class RegisterForm extends Component {
-    
+
     state = initState;
 
     handleNameChange = e => {
@@ -82,38 +82,14 @@ export default class RegisterForm extends Component {
             password: this.state.password
         }
 
-        // fetch('http://localhost:9000/api/auth/register', {
-        //     method: 'POST',
-        //     credentials: 'include',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify({
-        //         name: this.state.name,
-        //         email: this.state.email,
-        //         password: this.state.password,
-        //     }),
-        // })
         axios.post('http://localhost:9000/api/auth/register', registered)
             .then(function (res) {
                 console.log(res.data);
-            })
-            // .then((data) => {
-            //     if (!data.success) {
-            //         console.log(data)
-            //         this.setState({
-            //             errMessage: data.message
-            //         });
-            //     } else {
-            //         window.localStorage.setItem('name', data.data.name);
-            //         window.localStorage.setItem('email', data.data.email);
-            //         window.location.href = '/';
-            //     }
-            // })
-            .catch((err) => {
-                this.setState({
-                    errMessage: err.message,
-                });
+                window.localStorage.setItem('email', res.data.newUser.email);
+                window.localStorage.setItem('name', res.data.newUser.name);
+                window.location.href = '/';
+            }, (error) => {
+                console.log(error);
             });
     }
 
@@ -126,28 +102,28 @@ export default class RegisterForm extends Component {
                         <div className="input-container">
                             <input className={this.state.emailError ? 'input-error input-empty' : 'input-empty'} type="text"
                                 onChange={this.handleNameChange}
-                            required />
+                                required />
                             <label>Name</label>
                         </div>
                         <div className="input-container">
                             <input className={this.state.emailError ? 'input-error input-empty' : 'input-empty'} type="email"
                                 onChange={this.handleEmailChange}
-                            required />
+                                required />
                             <label>Email or Phone Number</label>
                             <span style={{ color: '#db7302' }}>{this.state.emailError}</span>
                         </div>
                         <div className="input-container">
                             <input className={this.state.emailError ? 'input-error input-empty' : 'input-empty'} type="password"
                                 onChange={this.handlePasswordChange}
-                            required />
-                            <label>Password</label>      
-                            <span style={{ color: '#db7302' }}>{this.state.passwordError}</span>                     
+                                required />
+                            <label>Password</label>
+                            <span style={{ color: '#db7302' }}>{this.state.passwordError}</span>
                         </div>
                         <div className="input-container">
                             <Button href="/" type="submit" onClick={e => this.onSubmit(e)}>Sign up</Button>
                         </div>
-                        
-            
+
+
                     </form>
                 </div>
             </FormContainer>
@@ -270,7 +246,7 @@ const FormContainer = styled.div`
     }
 `;
 
-const Button = styled.button `
+const Button = styled.button`
     color: #fff;
     background: rgba(229, 9,20);
     border:none;

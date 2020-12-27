@@ -1,15 +1,11 @@
 import React, { Component } from "react";
 import './css/App.css'
-import Main from './pages'
+import Main from './pages/index'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import { Switch, Route } from 'react-router-dom';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { apiResponse: "" };
-  }
 
   render() {
     return (

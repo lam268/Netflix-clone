@@ -1,35 +1,43 @@
-import React from 'react'
+import React, {Component} from 'react'
+import { Button } from './Buttons'
+import { NavLink } from 'react-router-dom'
+import styled from 'styled-components'
+import Imtv from '../images/tab-tv.png'
+import ImTablet from '../images/tab-tablet.png'
+import ImMac from '../images/tab-macbook.png'
 
-function TabContentThree() {
-    return (
-        <TabContentTwoContainer>
-            <div class="tab-content">
-                <div class="tab-top-content">
-                    <span style = {{ fontsize: '1.5rem'}}>
-                        Watch TV shows and movies anytime, anywhere - personalized for you.
+class TabContentThree extends Component {
+    render() {
+        return (
+            <TabContentTwoContainer>
+                <div className="tab-content">
+                    <div className="tab-top-content">
+                        <span style={{ fontsize: '1.5rem' }}>
+                            Watch TV shows and movies anytime, anywhere - personalized for you.
                 </span>
-                    <Button className="btn">try it now</Button>
+                        <NavLink to='/login' className="btn"><Button className="btn">try it now</Button></NavLink>
+                    </div>
                 </div>
-            </div>
-            <div className="tab-bottom-content">
-                <div>
-                    <img src = {Imtv} style = {{ width: '18.76rem'}} alt = ""/>
-                    <h3>Watch on your TV</h3>
-                    <p>Smart TVs, Playstation, Xbox, Chromecast, Apple TV, Blu-ray player and more</p>
+                <div className="tab-bottom-content">
+                    <div>
+                        <img src={Imtv} style={{ width: '18.76rem' }} alt="" />
+                        <h3>Watch on your TV</h3>
+                        <p>Smart TVs, Playstation, Xbox, Chromecast, Apple TV, Blu-ray player and more</p>
+                    </div>
+                    <div>
+                        <img src={ImTablet} style={{ width: '18.76rem' }} alt="" />
+                        <h3>Watch on your TV</h3>
+                        <p>Smart TVs, Playstation, Xbox, Chromecast, Apple TV, Blu-ray player and more</p>
+                    </div>
+                    <div>
+                        <img src={ImMac} style={{ width: '18.76rem' }} alt="" />
+                        <h3>Watch on your TV</h3>
+                        <p>Smart TVs, Playstation, Xbox, Chromecast, Apple TV, Blu-ray player and more</p>
+                    </div>
                 </div>
-                <div>
-                    <img src = {ImTablet} style = {{ width: '18.76rem'}} alt = ""/>
-                    <h3>Watch on your TV</h3>
-                    <p>Smart TVs, Playstation, Xbox, Chromecast, Apple TV, Blu-ray player and more</p>
-                </div>
-                <div>
-                    <img src = {ImMac} style = {{ width: '18.76rem'}} alt = ""/>
-                    <h3>Watch on your TV</h3>
-                    <p>Smart TVs, Playstation, Xbox, Chromecast, Apple TV, Blu-ray player and more</p>
-                </div>
-            </div>
-        </TabContentTwoContainer>
-    )
+            </TabContentTwoContainer>
+        )
+    }
 }
 
 export default TabContentThree

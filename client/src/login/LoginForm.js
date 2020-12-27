@@ -71,38 +71,16 @@ class LoginForm extends Component {
             password: this.state.password
         }
 
-        // fetch('http://localhost:9000/api/auth/login', {
-        //     method: 'POST',
-        //     credentials: 'include',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify({
-        //         email: this.state.email,
-        //         password: this.state.password,
-        //     }),
-        // })
         axios.post('http://localhost:9000/api/auth/login', LoginState)
             .then(function (res) {
-                console.log(res);
-            })
-            .catch((err) => {
-                this.setState({
-                    errMessage: err.message,
-                });
+                console.log(res.data);
+                window.localStorage.setItem('email', res.data.user.email);
+                window.localStorage.setItem('name', res.data.user.name);
+                window.location.href = '/';
+                
+            }, (error) => {
+                console.log(error);
             });
-            // .then((data) => {
-            //     console.log(data);
-            //     if (!data.success) {
-            //         this.setState({
-            //             errMessage: data.message
-            //         });
-            //     } else {
-            //         window.localStorage.setItem('email', data.data.email);
-            //         window.location.href = '/';
-            //     }
-            // })
-            
     }
 
     handelcheckbox = e => {
