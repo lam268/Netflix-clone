@@ -12,6 +12,7 @@ const cors = require('cors');
 var indexRouter = require('./routes/index');
 var authRouter = require('./routes/auth');
 var userRouter = require('./routes/user');
+var filmRouter = require('./routes/films');
 
 var app = express();
 
@@ -40,6 +41,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/api/users', userRouter);
 app.use('/api/auth', authRouter);
+app.use('/api/film', filmRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

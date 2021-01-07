@@ -1,11 +1,6 @@
-const filmSchema = new mongoose.Schema({
-    id: {
-        type: Number,
-        required: true,
-        index: {
-            unique: true,
-        }
-    },
+const mongoose = require('mongoose');
+
+const filmSchema = new mongoose.Schema({    
     title: {
         type: String,
         required: true,
@@ -16,7 +11,15 @@ const filmSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-
+    content: {
+        type: String,
+        max: 255,
+        required: false,
+    },
+    gerne: {
+        type: String,
+        required: true,
+    }
 })
 
 module.exports = mongoose.model('Film', filmSchema);

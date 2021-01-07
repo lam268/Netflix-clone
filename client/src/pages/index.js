@@ -3,6 +3,7 @@ import Header from '../components/Header'
 import TabComponent from '../components/TabComponent'
 import Footer from '../components/Footer'
 import LoginedHeader from '../loginedcomponents/LoginedHeader'
+import Row from '../loginedcomponents/Row'
 
 class Main extends Component {
     state = {
@@ -33,6 +34,7 @@ class Main extends Component {
                 {this.state.currentUser.email ? (
                     <div>
                         <LoginedHeader/>
+                        <Row></Row>
                         <Footer></Footer> 
                     </div>
                 ) : (
