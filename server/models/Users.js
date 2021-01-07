@@ -19,7 +19,11 @@ const userSchema = new mongoose.Schema({
         required: true,
         min: 6,
         max: 255
-    }
+    },
+    status: {
+        type: String,
+        default: "pending",
+    },
 });
 
 module.exports = mongoose.model('User', userSchema);

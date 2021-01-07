@@ -92,14 +92,14 @@ const Header = styled.div`
     }
 
     .search input {
-        width: 200px;
+        width: 190px;
         height: 100%;
         border: none;
         padding: 0 10px;
     }
 
     .search button {
-        width: 50px;
+        width: 60px;
         height: 100%;
         border: none;
         cursor: pointer;

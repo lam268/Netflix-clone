@@ -52,6 +52,7 @@ class Row extends Component {
     };
 
     render() {
+        const linkURL = `http://localhost:3000/watch/${(this.state.clickedfilm.title) ? this.state.clickedfilm.title : this.state.default.title}`
         return (
             <Contain>
                 <Section>
@@ -61,7 +62,7 @@ class Row extends Component {
                     <Contentdiv>
                                 <h2>{(this.state.clickedfilm.title) ? this.state.clickedfilm.title : this.state.default.title}</h2>
                                 <p>{(this.state.clickedfilm.content) ? this.state.clickedfilm.content : this.state.default.content}</p>
-                                <a href="/">
+                                <a href={linkURL}>
                                     Watch free
                             </a>
                                 <a href="/">
@@ -217,6 +218,7 @@ const Contentdiv = styled.div`
         display: inline-block;
         text-decoration: none;
         font-family: 'Bebas Neue', cursive;
+        background: red;
         color: white;
         padding: 10px 15px;
     }
