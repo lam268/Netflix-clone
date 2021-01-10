@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import './css/App.css'
+import './components/css/App.css'
 import Main from './pages/index'
 import Login from './pages/Login'
 import Register from './pages/Register'

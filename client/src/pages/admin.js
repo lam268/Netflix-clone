@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Navbar, Form, FormControl, Nav } from 'react-bootstrap';
-import LoginForm from '../login/LoginForm'
+import LoginForm from '../components/login/LoginForm';
 
 class Admin extends Component {
 

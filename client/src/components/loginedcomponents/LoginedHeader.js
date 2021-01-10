@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { Button } from '../components/Buttons'
+import { Button } from '../ladingpage/Buttons'
 import axios from 'axios';
 
 class LoginedHeader extends Component {
@@ -99,7 +99,7 @@ const Header = styled.div`
     }
 
     .search button {
-        width: 50px;
+        width: 80px;
         height: 100%;
         border: none;
         cursor: pointer;
@@ -147,7 +147,7 @@ const U = styled.li`
 `;
 
 const Search = styled.div`
-    max-width: 250px;
+    max-width: 300px;
     width: 100%;
     height: 30px;
     margin-right: 100px;

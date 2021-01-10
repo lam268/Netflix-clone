@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import Header from '../components/Header'
-import TabComponent from '../components/TabComponent'
-import Footer from '../components/Footer'
-import LoginedHeader from '../loginedcomponents/LoginedHeader'
-import Row from '../loginedcomponents/Row'
+import Header from '../components/ladingpage/Header'
+import TabComponent from '../components/ladingpage/TabComponent'
+import Footer from '../components/ladingpage/Footer'
+import LoginedHeader from '../components/loginedcomponents/LoginedHeader'
+import Row from '../components/loginedcomponents/Row'
 
 class Main extends Component {
     state = {

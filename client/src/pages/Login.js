@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import logo from '../svg/logo.svg'
+import logo from '../components/svg/logo.svg';
 import styled from 'styled-components'
-import LoginForm from '../login/LoginForm'
-import LoginFooter from '../login/LoginFooter'
+import LoginForm from '../components/login/LoginForm'
+import LoginFooter from '../components/login/LoginFooter'
 
 class Login extends Component {
     render() {

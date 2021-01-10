@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import logo from '../svg/logo.svg'
+import logo from '../components/svg/logo.svg';
 import styled from 'styled-components'
-import RegisterForm from '../register/RegisterForm'
-import RegisterFooter from '../register/RegisterFooter'
+import RegisterForm from '../components/register/RegisterForm'
+import RegisterFooter from '../components/register/RegisterFooter'
 
 class Register extends Component {
     render() {
