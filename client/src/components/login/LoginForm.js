@@ -77,7 +77,6 @@ class LoginForm extends Component {
                 window.localStorage.setItem('email', res.data.user.email);
                 window.localStorage.setItem('name', res.data.user.name);
                 window.location.href = '/';
-                
             }, (error) => {
                 console.log(error);
             });
@@ -143,7 +142,7 @@ const FormContainer = styled.div`
         background: rgba(0,0,0,0.8);
         position: relative;
         width: 28.125rem;
-        height: 41.25rem;
+        height: 37.25rem;
         padding: 4rem;
     }
 

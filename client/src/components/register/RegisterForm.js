@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
-
-const regexp = RegExp(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/);
+import UserControllers from '../../controllers/UsersControllers'
 
 const initState = {
     name: '',
@@ -12,6 +11,8 @@ const initState = {
     passwordError: '',
     nameError: '',
 }
+
+var userControllers = new UserControllers();
 
 export default class RegisterForm extends Component {
 
@@ -35,62 +36,34 @@ export default class RegisterForm extends Component {
         });
     };
 
-    validate = () => {
-        let inputError = false;
-        const errors = {
-            emailError: '',
-            passwordError: ''
-        };
-        if (!this.state.name) {
-            inputError = true;
-            errors.namedError = "Please enter name"
-        }
-        if (!this.state.email) {
-            inputError = true;
-            errors.emailError = 'Please enter a valid email'
-        } else if (!this.state.email.match(regexp)) {
-            inputError = true;
-            errors.emailError = (
-                <span style={{ color: 'red' }}> Your email address must be valid</span>
-            )
-        }
-
-        if (this.state.password.length < 4) {
-            inputError = true;
-            errors.passwordError = 'Your password must be contains between 4 and 40 characters'
-        }
-
-        this.setState({
-            ...errors
-        })
-
-        return inputError;
-    }
-
     onSubmit = e => {
         e.preventDefault();
 
-        const err = this.validate();
+        const err = userControllers.validate(this.state)
+        this.setState({
+            ...err
+        })
+        console.log(err)
 
-        if (!err) {
+        if (this.state.emailError === "") {
             this.setState(initState);
-        }
 
-        const registered = {
-            name: this.state.name,
-            email: this.state.email,
-            password: this.state.password
-        }
+            const registered = {
+                name: this.state.name,
+                email: this.state.email,
+                password: this.state.password
+            }
 
-        axios.post('http://localhost:9000/api/auth/register', registered)
-            .then(function (res) {
-                console.log(res.data);
-                window.localStorage.setItem('email', res.data.newUser.email);
-                window.localStorage.setItem('name', res.data.newUser.name);
-                window.location.href = '/';
-            }, (error) => {
-                console.log(error);
-            });
+            axios.post('http://localhost:9000/api/auth/register', registered)
+                .then(function (res) {
+                    console.log(res.data);
+                    window.localStorage.setItem('email', res.data.newUser.email);
+                    window.localStorage.setItem('name', res.data.newUser.name);
+                    window.location.href = '/';
+                }, (error) => {
+                    console.log(error);
+                });
+        }
     }
 
     render() {
@@ -100,10 +73,11 @@ export default class RegisterForm extends Component {
                     <form>
                         <h1>Sign up</h1>
                         <div className="input-container">
-                            <input className={this.state.emailError ? 'input-error input-empty' : 'input-empty'} type="text"
+                            <input className={this.state.namedError ? 'input-error input-empty' : 'input-empty'} type="text"
                                 onChange={this.handleNameChange}
                                 required />
                             <label>Name</label>
+                            <span style={{ color: '#db7302' }}>{this.state.namedError}</span>
                         </div>
                         <div className="input-container">
                             <input className={this.state.emailError ? 'input-error input-empty' : 'input-empty'} type="email"
@@ -136,13 +110,13 @@ const FormContainer = styled.div`
     display: grid;
     justify-content: center;
     position: relative;
-    z-index: 5;
+    z-index: 5; 
 
     .form-container {
         background: rgba(0,0,0,0.8);
         position: relative;
         width: 28.125rem;
-        height: 41.25rem;
+        height: 37.25rem;
         padding: 4rem;
     }
 

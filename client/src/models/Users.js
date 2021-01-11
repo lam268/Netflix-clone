@@ -1,8 +1,6 @@
-const userSchema = new Schema({
-    name: {
-        type: 'string',
-    },
-    email: {
-        type: 'string',
-    },
-})
+const User = {
+    name: '',
+    email: '',
+}
+
+module.exports = User;
