@@ -76,7 +76,7 @@ class LoginedHeader extends Component {
 export default LoginedHeader;
 
 const Header = styled.div`
-    font-family: 'Bebas Neue', cursive;
+    font-family: 'Helvetica', cursive;
     margin: 0;
     padding: 0;
     box-sizing: border-box;

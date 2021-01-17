@@ -44,7 +44,8 @@ export default TabContentThree
 
 const TabContentTwoContainer = styled.div`
     background: var(--main-deep-dark);
-
+    color: white;
+    font-size: 1.5rem;
     .tab-content {
         margin: 0 15%;
     }

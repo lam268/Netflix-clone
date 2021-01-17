@@ -1,7 +1,7 @@
-function FilmService() {
-    var self = this;
-
-    self.getFilms = function() {
-        
-    }
+const Film = {
+    title: '',
+    content: '',
+    imageURL: '',
 }
+
+module.exports = Film;

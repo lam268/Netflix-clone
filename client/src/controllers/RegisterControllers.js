@@ -1,21 +1,24 @@
 import axios from 'axios';
 import User from '../models/Users'
 
-function UserControllers() {
+function RegisterControllers() {
     var self = this;
     var Users = new Array(User);
 
     axios.get('http://localhost:9000/api/users')
-            .then(function (res) {
-                res.data.forEach(function (user) {
-                    const temp = {
-                        name: user.name,
-                        email: user.email,
-                    }
-                    Users.push(temp);
-                })
-                Users.shift();
+        .then(function (res) {
+            res.data.forEach(function (user) {
+                const temp = {
+                    name: user.name,
+                    email: user.email,
+                }
+                Users.push(temp);
             })
+            Users.shift();
+        })
+        .catch(err => {
+            console.log(err);
+        })
 
     self.validate = function (state) {
         const regexp = RegExp(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/);
@@ -53,7 +56,24 @@ function UserControllers() {
         return errors;
     }
 
+    self.register = function(state) {
+
+        const registered = {
+            name: state.name,
+            email: state.email,
+            password: state.password
+        }
+
+        axios.post('http://localhost:9000/api/auth/register', registered)
+                .then(function (res) {
+                    console.log(res.data);
+                    window.location.href = '/login';
+                }, (error) => {
+                    console.log(error);
+                });
+    }
+
     return self;
 };
 
-export default UserControllers;
+export default RegisterControllers;

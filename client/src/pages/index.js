@@ -4,6 +4,9 @@ import TabComponent from '../components/ladingpage/TabComponent'
 import Footer from '../components/ladingpage/Footer'
 import LoginedHeader from '../components/loginedcomponents/LoginedHeader'
 import Row from '../components/loginedcomponents/Row'
+import IndexControllers from '../controllers/IndexControllers'
+
+var indexControllers = new IndexControllers();
 
 class Main extends Component {
     state = {
@@ -14,6 +17,7 @@ class Main extends Component {
     };
 
     UNSAFE_componentWillMount() {
+        indexControllers.getCurrentUser();
         const email = window.localStorage.getItem('email');
         const name = window.localStorage.getItem('name');
 
@@ -28,7 +32,6 @@ class Main extends Component {
     }
 
     render() {
-        console.log(this.state.currentUser);
         return (
             <div>
                 {this.state.currentUser.email ? (

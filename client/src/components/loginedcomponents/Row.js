@@ -1,56 +1,39 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import axios from 'axios';
 import FilmsControllers from '../../controllers/FilmsControllers'
+
+var filmController = new FilmsControllers();
 
 class Row extends Component {
 
     state = {
         films: [],
-        default: {
-            title: '',
-            content: '',
-            imageURL: '',
-            gerne: '',
-        },
         clickedfilm: {
             title: '',
             content: '',
             imageURL: '',
             gerne: '',
-        }
+        },
+    }
+
+    UNSAFE_componentWillMount() {
+        this.setState({
+            films: filmController.getFilms(),
+        });
     }
 
     handleClick(e, item) {
         e.preventDefault();
-
         this.setState({
             clickedfilm: {
                 title: item.title,
                 content: item.content,
                 imageURL: item.imageURL
             }
-
         })
     };
 
-    UNSAFE_componentWillMount() {
-        axios.get('http://localhost:9000/api/film/')
-            .then(data => {
-                console.log(data.data);
-                this.setState({
-                    films: data.data.data,
-                    default: {
-                        title: data.data.data[0].title,
-                        imageURL: data.data.data[0].imageURL,
-                        content: data.data.data[0].content
-                    }
-                });
-            })
-            .catch(err => {
-                console.log(err);
-            })
-    };
+
 
     render() {
         return (
@@ -58,10 +41,10 @@ class Row extends Component {
                 <Section>
                     <Container>
                         <Slides>
-                            <img className="choose" src={(this.state.clickedfilm.imageURL) ? this.state.clickedfilm.imageURL : this.state.default.imageURL} alt="slide" />;
+                            <img className="choose" src={(this.state.clickedfilm.imageURL) ? this.state.clickedfilm.imageURL : this.state.films[0].imageURL} alt="slide" />;
                     <Contentdiv>
-                                <h2>{(this.state.clickedfilm.title) ? this.state.clickedfilm.title : this.state.default.title}</h2>
-                                <p>{(this.state.clickedfilm.content) ? this.state.clickedfilm.content : this.state.default.content}</p>
+                                <h2>{(this.state.clickedfilm.title) ? this.state.clickedfilm.title : this.state.films[0].title}</h2>
+                                <p>{(this.state.clickedfilm.content) ? this.state.clickedfilm.content : this.state.films[0].content}</p>
                                 <a href="/">
                                     Watch free
                             </a>
@@ -81,7 +64,6 @@ class Row extends Component {
                                     <a onClick={(e) => this.handleClick(e, item)} >
                                         <img src={item.imageURL} alt="" />
                                     </a>
-
                                 </Column>
                             )
                         })}

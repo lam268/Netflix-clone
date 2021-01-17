@@ -18,6 +18,10 @@ const userSchema = new mongoose.Schema({
         required: true,
         min: 6,
         max: 255
+    },
+    confirmed: {
+        type: Boolean,
+        default: false
     }
 });
 

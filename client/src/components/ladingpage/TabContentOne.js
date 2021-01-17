@@ -29,6 +29,7 @@ export default TabContentOne
 
 const TabContentOneContainer = styled.div`
     background: var(--main-deep-dark);
+    color: white;
 
     .container {
         margin: 0 10%;

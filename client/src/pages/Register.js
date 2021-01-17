@@ -9,7 +9,9 @@ class Register extends Component {
         return (
             <div className="main-login-container">
                 <div className="header-top">
-                    <Logo src={logo} alt="logo" className="logo"/>
+                    <a href="/">
+                        <Logo src={logo} alt="logo" className="logo" />
+                    </a>
                 </div>
                 <RegisterForm />
                 <RegisterFooter />

@@ -6,6 +6,7 @@
 
 .tabs {
     padding-top: 1rem;
+    background-color: var(--main-deep-dark);
 }
 
 .tab-nav-container {

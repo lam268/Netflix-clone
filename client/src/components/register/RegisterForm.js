@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import axios from 'axios'
-import UserControllers from '../../controllers/UsersControllers'
+import { Link } from 'react-router-dom';
+import RegisterControllers from '../../controllers/RegisterControllers'
 
 const initState = {
     name: '',
@@ -12,7 +12,7 @@ const initState = {
     nameError: '',
 }
 
-var userControllers = new UserControllers();
+var registerControllers = new RegisterControllers();
 
 export default class RegisterForm extends Component {
 
@@ -39,30 +39,14 @@ export default class RegisterForm extends Component {
     onSubmit = e => {
         e.preventDefault();
 
-        const err = userControllers.validate(this.state)
+        const err = registerControllers.validate(this.state)
         this.setState({
             ...err
         })
-        console.log(err)
 
-        if (this.state.emailError === "") {
+        if (err.emailError === "") {
             this.setState(initState);
-
-            const registered = {
-                name: this.state.name,
-                email: this.state.email,
-                password: this.state.password
-            }
-
-            axios.post('http://localhost:9000/api/auth/register', registered)
-                .then(function (res) {
-                    console.log(res.data);
-                    window.localStorage.setItem('email', res.data.newUser.email);
-                    window.localStorage.setItem('name', res.data.newUser.name);
-                    window.location.href = '/';
-                }, (error) => {
-                    console.log(error);
-                });
+            registerControllers.register(this.state)
         }
     }
 
@@ -96,8 +80,10 @@ export default class RegisterForm extends Component {
                         <div className="input-container">
                             <Button href="/" type="submit" onClick={e => this.onSubmit(e)}>Sign up</Button>
                         </div>
-
-
+                        <div className="bottom-form">
+                            <span style={{ color: '#999', fontsize: '1.1rem' }}>Already has an account  </span>
+                            <Link to="/login" className="sign-up-text">Sign In</Link>
+                        </div>
                     </form>
                 </div>
             </FormContainer>
@@ -119,6 +105,7 @@ const FormContainer = styled.div`
         height: 37.25rem;
         padding: 4rem;
     }
+
 
     .input-container {
         display:grid;

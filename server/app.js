@@ -4,16 +4,18 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require('mongoose');
-const expressSession = require('express-session');
+// const expressSession = require('express-session');
 const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const nodemailer = require('nodemailer')
 
 var indexRouter = require('./routes/index');
 var authRouter = require('./routes/auth');
 var userRouter = require('./routes/user');
 var filmRouter = require('./routes/films');
-
+const GMAIL_USER = 'lamlevu2610@gmail.com';
+const GMAIL_PASS = 'LaM261019@'
 var app = express();
 
 // view engine setup
@@ -25,12 +27,14 @@ app.use(cors({
 }));
 app.use(express.static('public'));
 app.use(bodyParser.json());
-app.use(expressSession({
-  secret: 'keyboard cat',
-  resave: false,
-  saveUninitialized: true,
-  cookie: { secure: false },
-}));
+// app.use(expressSession({
+//   secret: 'keyboard cat',
+//   resave: false,
+//   saveUninitialized: true,
+//   cookie: {
+//     expires: 60 * 60 * 24,
+//    },
+// }));
 
 app.use(logger('dev'));
 app.use(express.json());

@@ -16,7 +16,7 @@ function Header() {
             <div className="header-content">
                 <Title>See what's next</Title>
                 <SubTitle>WATCH ANYWHERE. CANCEL ANYTIME</SubTitle>
-                <NavLink to='/login'>
+                <NavLink to='/register'>
                 <Button primary>TRY IT NOW
                 <Icon className="Icon" size = {35} icon={arrow_right}  />
                 </Button>
@@ -44,6 +44,7 @@ const HeaderComponent = styled.div`
         padding: 0.4375rem 1.0625rem;
         font-weight: 400;
         line-height: normal;
+        color: white;
         border-radius: 0.1875rem;
         font-size: 1rem;
         background: var(--main-red);
@@ -85,6 +86,7 @@ const Title = styled.h1`
     font-size: 5rem;
     font_weight: 700;
     line-height: 1.1em;
+    color: white;
 `;
 
 const SubTitle = styled.h2`
@@ -92,5 +94,6 @@ const SubTitle = styled.h2`
     font-size: 1.875rem;
     line-height: 1.25em;
     margin: 0 0 1.875rem;
+    color: white;
     text-transform: uppercase;
 `;

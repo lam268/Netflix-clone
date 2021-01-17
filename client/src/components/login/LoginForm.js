@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import LoginControllers from '../../controllers/LoginControllers'
 
-const regexp = RegExp(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/);
+var loginControllers = new LoginControllers();
 
 const initState = {
     checked: true,
     email: '',
     password: '',
     emailError: '',
-    passwordError: ''
+    passwordError: '',
+    confirmedError: '',
 }
 
 class LoginForm extends Component {
@@ -28,58 +29,17 @@ class LoginForm extends Component {
         });
     };
 
-    validate = () => {
-        let inputError = false;
-        const errors = {
-            emailError: '',
-            passwordError: ''
-        };
-
-        if (!this.state.email) {
-            inputError = false;
-            errors.emailError = 'Please enter a valid email'
-        } else if (!this.state.email.match(regexp)) {
-            inputError = true;
-            errors.emailError = (
-                <span style={{ color: 'red' }}> Your email address must be valid</span>
-            )
-        }
-
-        if (this.state.password.length < 4) {
-            inputError = true;
-            errors.passwordError = 'Your password must be contains between 4 and 40 characters'
-        }
-
-        this.setState({
-            ...errors
-        })
-
-        return inputError;
-    }
-
     onSubmit = e => {
         e.preventDefault();
 
-        const err = this.validate();
-
-        if (!err) {
+        const err = loginControllers.validate(this.state);
+        this.setState({
+            ...err
+        })
+        if (err.emailError === "") {
             this.setState(initState);
+            loginControllers.login(this.state)
         }
-
-        const LoginState = {
-            email: this.state.email,
-            password: this.state.password
-        }
-
-        axios.post('http://localhost:9000/api/auth/login', LoginState)
-            .then(function (res) {
-                console.log(res.data);
-                window.localStorage.setItem('email', res.data.user.email);
-                window.localStorage.setItem('name', res.data.user.name);
-                window.location.href = '/';
-            }, (error) => {
-                console.log(error);
-            });
     }
 
     handelcheckbox = e => {
@@ -94,6 +54,7 @@ class LoginForm extends Component {
                 <div className="form-container">
                     <form>
                         <h1>Sign in</h1>
+                        <span style={{ color: '#db7302' }}>{this.state.confirmedError}</span>
                         <div className="input-container">
                             <input className={this.state.emailError ? 'input-error input-empty' : 'input-empty'} type="email"
                                 onChange={this.handleEmailChange}
@@ -118,7 +79,6 @@ class LoginForm extends Component {
                                 onChange={this.handelcheckbox} />
                             <span className="checkmark"></span>
                         </label>
-                        <Link className="need-help" to="/">Need Help?</Link>
                         <div className="bottom-form">
                             <span style={{ color: '#999', fontsize: '1.1rem' }}>New to MoiFlix   </span>
                             <Link to="/register" className="sign-up-text">Sign Up Now</Link>
