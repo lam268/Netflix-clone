@@ -8,14 +8,13 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const nodemailer = require('nodemailer')
 
 var indexRouter = require('./routes/index');
 var authRouter = require('./routes/auth');
 var userRouter = require('./routes/user');
 var filmRouter = require('./routes/films');
-const GMAIL_USER = 'lamlevu2610@gmail.com';
-const GMAIL_PASS = 'LaM261019@'
+var socketRouter = require('./routes/socket');
+
 var app = express();
 
 // view engine setup
@@ -27,14 +26,6 @@ app.use(cors({
 }));
 app.use(express.static('public'));
 app.use(bodyParser.json());
-// app.use(expressSession({
-//   secret: 'keyboard cat',
-//   resave: false,
-//   saveUninitialized: true,
-//   cookie: {
-//     expires: 60 * 60 * 24,
-//    },
-// }));
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -46,6 +37,7 @@ app.use('/', indexRouter);
 app.use('/api/users', userRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/film', filmRouter);
+app.use('/api/chat', socketRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -1,61 +1,85 @@
+  
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import FilmsControllers from '../../controllers/FilmsControllers'
-
-
-
+import axios from 'axios';
 
 class Row extends Component {
 
     state = {
         films: [],
+        default: {
+            title: '',
+            content: '',
+            imageURL: '',
+            gerne: '',
+        },
         clickedfilm: {
             title: '',
             content: '',
             imageURL: '',
             gerne: '',
         },
-    }
-
-    async UNSAFE_componentWillMount() {
-        const filmController = new FilmsControllers();
-        const filmGet = await filmController.getFilms();
-        this.setState({
-            films:filmGet,
-        });
-        console.log(this.state);
-
+        roomid: '',
     }
 
     handleClick(e, item) {
         e.preventDefault();
-        console.log(this.state);
+
         this.setState({
             clickedfilm: {
                 title: item.title,
                 content: item.content,
                 imageURL: item.imageURL
             }
-        });
-        console.log(this.state);
+
+        })
     };
 
+    createRoom(e) {
+        e.preventDefault();
 
+        axios.post('http://localhost:9000/api/chat/room',this.state)
+            .then((res) => {
+                console.log(res.data)
+                window.localStorage.setItem('roomId',res.data.room);
+                window.location.href=`/watch/room/${res.data.room}`
+            })
+    }
+
+    UNSAFE_componentWillMount() {
+        axios.get('http://localhost:9000/api/film/')
+            .then(data => {
+                console.log(data.data);
+                this.setState({
+                    films: data.data.data,
+                    default: {
+                        title: data.data.data[0].title,
+                        imageURL: data.data.data[0].imageURL,
+                        content: data.data.data[0].content
+                    }
+                });
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    };
 
     render() {
+        const linkURL = `http://localhost:3000/watch/${(this.state.clickedfilm.title) ? this.state.clickedfilm.title : this.state.default.title}`
+        
         return (
             <Contain>
                 <Section>
                     <Container>
                         <Slides>
-                            <img className="choose" src={(this.state.clickedfilm.imageURL) ? this.state.clickedfilm.imageURL : this.state.films[0].imageURL} alt="slide" />;
+                            <img className="choose" src={(this.state.clickedfilm.imageURL) ? this.state.clickedfilm.imageURL : this.state.default.imageURL} alt="slide" />;
                     <Contentdiv>
-                                <h2>{(this.state.clickedfilm.title) ? this.state.clickedfilm.title : this.state.films[0].title}</h2>
-                                <p>{(this.state.clickedfilm.content) ? this.state.clickedfilm.content : this.state.films[0].content}</p>
-                                <a href="/">
+                                <h2>{(this.state.clickedfilm.title) ? this.state.clickedfilm.title : this.state.default.title}</h2>
+                                <p>{(this.state.clickedfilm.content) ? this.state.clickedfilm.content : this.state.default.content}</p>
+                                <a href={linkURL}>
                                     Watch free
                             </a>
-                                <a href="/">
+                                <a onClick={(e) => this.createRoom(e)}>
                                     Watch with your friends
                             </a>
                             </Contentdiv>
@@ -71,6 +95,7 @@ class Row extends Component {
                                     <a onClick={(e) => this.handleClick(e, item)} >
                                         <img src={item.imageURL} alt="" />
                                     </a>
+
                                 </Column>
                             )
                         })}
@@ -139,7 +164,6 @@ const Column = styled.div`
     height: 100%;
     transition: 0.3s linear;
     cursor: pointer;
-
     a img {
         width: 100%;
         height: 100%;
@@ -164,7 +188,6 @@ const Slides = styled.div`
     height: 100%;
     position: relative;
     animation: fade 1s ease-in-out;
-
     keyframes fade {
         to {
             opacity: 1;
@@ -173,7 +196,6 @@ const Slides = styled.div`
             opacity: 0;
         }
     }
-
     .choose {
         width: 100%;
         height: 100%;
@@ -190,19 +212,16 @@ const Contentdiv = styled.div`
     color: white;
     max-width: 400px;
     text-shadow: 0 0 1px #000;
-
     h2 {
         font-size: 2em;
         font-family: 'Bebas Neue', cursive;
         letter-spacing: 2px;
     }
-
     p {
         line-height: 1.4;
         margin: 10px 0;
         font-family: 'Bebas Neue', cursive;
     }
-
     a{
         display: inline-block;
         text-decoration: none;
@@ -212,6 +231,5 @@ const Contentdiv = styled.div`
     }
     a:hover {
         background: chocolate;
-
     }
 `;
