@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import FilmsControllers from '../../controllers/FilmsControllers'
 
-var filmController = new FilmsControllers();
+
+
 
 class Row extends Component {
 
@@ -16,21 +17,27 @@ class Row extends Component {
         },
     }
 
-    UNSAFE_componentWillMount() {
+    async UNSAFE_componentWillMount() {
+        const filmController = new FilmsControllers();
+        const filmGet = await filmController.getFilms();
         this.setState({
-            films: filmController.getFilms(),
+            films:filmGet,
         });
+        console.log(this.state);
+
     }
 
     handleClick(e, item) {
         e.preventDefault();
+        console.log(this.state);
         this.setState({
             clickedfilm: {
                 title: item.title,
                 content: item.content,
                 imageURL: item.imageURL
             }
-        })
+        });
+        console.log(this.state);
     };
 
 

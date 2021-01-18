@@ -73,12 +73,6 @@ class LoginForm extends Component {
                         <div className="input-container">
                             <Button href="/" type="submit" onClick={e => this.onSubmit(e)}>Sign in</Button>
                         </div>
-                        <label className="checkbox-container">
-                            Remember me
-                            <input type="checkbox" defaultChecked={this.state.checked}
-                                onChange={this.handelcheckbox} />
-                            <span className="checkmark"></span>
-                        </label>
                         <div className="bottom-form">
                             <span style={{ color: '#999', fontsize: '1.1rem' }}>New to MoiFlix   </span>
                             <Link to="/register" className="sign-up-text">Sign Up Now</Link>
@@ -147,43 +141,7 @@ const FormContainer = styled.div`
     .input-error {
         border-bottom: 1px solid #db7302;
     }
-
-    .checkbox-container {
-        margin-left: 0.75rem;
-        padding-left: 1.875rem;
-        position: relative;
-        font-size: 0.9rem;
-        cursor: pointer;
-        color: #999;
-    }
-
-    .checkbox-container input {
-        display: none;
-    }
-
-    .checkbox-container .checkmark {
-        display: inline-block;
-        background: #454545;
-        width: 1.1rem;
-        height: 1.1rem;
-        left: 0;
-        top: 0;
-        border-radius: 0.1rem;
-        position: absolute;
-    }
-
-    .checkbox-container input:checked + .checkmark:after {
-        content: '';
-        position: absolute;
-        height: 0.25rem;
-        width: 0.625rem;
-        border-left: 2px solid #000000;
-        border-bottom: 2px solid #000000;
-        top: 25%;
-        left: 21%;
-        transform: rotate(-45deg);
-    }
-
+    
     .need-help {
         text-decoration: none;
         color: #828282;

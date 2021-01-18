@@ -5,9 +5,9 @@ const router = express.Router();
 const session = require('express-session');
 const User = require('./../models/Users');
 const { registerValidator } = require('./../validations/auth');
-const nodemailer = require('nodemailer');
 const sgMailer = require('@sendgrid/mail');
 require('dotenv').config();
+
 router.use(session({
     secret: 'keyboard cat',
     resave: false,
@@ -59,13 +59,6 @@ router.post('/register', async (request, response) => {
     } catch (err) {
         response.status(400).send(err);
     }
-    // let tranporter = nodemailer.createTransport({
-    //     service: 'gmail',
-    //     auth: {
-    //         user: process.env.EMAIL,
-    //         pass: process.env.PASSWORD
-    //     }
-    // });
 
     let mailOptions = {
         from: process.env.EMAIL,

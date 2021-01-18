@@ -31,6 +31,11 @@ function LoginControllers() {
 
         axios.post('http://localhost:9000/api/auth/login', LoginState)
             .then(function (res) {
+                // localStorage.setItem()
+                // window.location.href = '/';
+                console.log(res.data);
+                window.localStorage.setItem('email', res.data.user.email);
+                window.localStorage.setItem('name', res.data.user.name);
                 window.location.href = '/';
             }, (error) => {
                 console.log(error);
