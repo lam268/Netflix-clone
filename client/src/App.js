@@ -3,7 +3,8 @@ import './components/css/App.css'
 import Main from './pages/index'
 import Login from './pages/Login'
 import Register from './pages/Register'
-import Admin from './pages/admin'
+import Vod from './components/playvid/Vod'
+import Chatroom from './components/playvid/Chatroom'
 import { Switch, Route } from 'react-router-dom';
 
 
@@ -15,7 +16,8 @@ class App extends Component {
         <Route exact path = "/" component = {Main} />
         <Route path = "/login" component = {Login} />
         <Route path = "/register" component = {Register} />
-        <Route path = "/admin" component = {Admin} />
+        <Route exact path={'/watch/:title'} component={Vod} />
+        <Route exact path={'/watch/room/:room'} component={Chatroom} />
       </Switch>
     )
   }
