@@ -59,13 +59,13 @@ router.post('/register', async (request, response) => {
     } catch (err) {
         response.status(400).send(err);
     }
-    let tranporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: process.env.EMAIL,
-            pass: process.env.PASSWORD
-        }
-    });
+    // let tranporter = nodemailer.createTransport({
+    //     service: 'gmail',
+    //     auth: {
+    //         user: process.env.EMAIL,
+    //         pass: process.env.PASSWORD
+    //     }
+    // });
 
     let mailOptions = {
         from: process.env.EMAIL,
