@@ -4,7 +4,7 @@ import Film from '../models/Films'
 function FilmsControllers() {
     var self = this;
 
-    self.getFilms = () => {
+    self.getFilms =  () => {
         var Films = new Array(Film);
         axios.get('http://localhost:9000/api/film/')
             .then(data => {
