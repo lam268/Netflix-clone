@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import axios from 'axios';
@@ -35,81 +34,77 @@ class Row extends Component {
         })
     };
 
-createRoom(e) {
-    e.preventDefault();
+    createRoom(e) {
+        e.preventDefault();
 
-    axios.post('http://localhost:9000/api/chat/room', this.state)
-        .then((res) => {
-            console.log(res.data)
-            window.localStorage.setItem('roomId', res.data.room);
-            window.location.href = `/watch/room/${res.data.room}`
-        })
-}
+        axios.post('http://localhost:9000/api/chat/room', this.state)
+            .then((res) => {
+                console.log(res.data)
+                window.localStorage.setItem('roomId', res.data.room);
+                window.location.href = `/watch/room/${res.data.room}`
+            })
+    }
 
-UNSAFE_componentWillMount() {
-    axios.get('http://localhost:9000/api/film/')
-        .then(data => {
-            console.log(data.data);
-            this.setState({
-                films: data.data.data,
-                default: {
-                    title: data.data.data[0].title,
-                    imageURL: data.data.data[0].imageURL,
-                    content: data.data.data[0].content
-                }
-            });
-        })
-        .catch(err => {
-            console.log(err);
-        })
-};
+    UNSAFE_componentWillMount() {
+        axios.get('http://localhost:9000/api/film/')
+            .then(data => {
+                console.log(data.data);
+                this.setState({
+                    films: data.data.data,
+                    default: {
+                        title: data.data.data[0].title,
+                        imageURL: data.data.data[0].imageURL,
+                        content: data.data.data[0].content
+                    }
+                });
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    };
 
-render() {
-    const linkURL = `http://localhost:3000/watch/${(this.state.clickedfilm.title) ? this.state.clickedfilm.title : this.state.default.title}`
-<<<<<<< HEAD
-=======
-
->>>>>>> 2b5b4547036333769266d7a7bcce03eb6729e498
-    return (
-        <Contain>
-            <Section>
-                <Container>
-                    <Slides>
-                        <img className="choose" src={(this.state.clickedfilm.imageURL) ? this.state.clickedfilm.imageURL : this.state.default.imageURL} alt="slide" />;
+    render() {
+        const linkURL = `http://localhost:3000/watch/${(this.state.clickedfilm.title) ? this.state.clickedfilm.title : this.state.default.title}`
+        return (
+            <Contain>
+                <Section>
+                    <Container>
+                        <Slides>
+                            <img className="choose" src={(this.state.clickedfilm.imageURL) ? this.state.clickedfilm.imageURL : this.state.default.imageURL} alt="slide" />;
                     <Contentdiv>
-                            <h2>{(this.state.clickedfilm.title) ? this.state.clickedfilm.title : this.state.default.title}</h2>
-                            <p>{(this.state.clickedfilm.content) ? this.state.clickedfilm.content : this.state.default.content}</p>
-                            <a href={linkURL}>
-                                Watch free
+                                <h2>{(this.state.clickedfilm.title) ? this.state.clickedfilm.title : this.state.default.title}</h2>
+                                <p>{(this.state.clickedfilm.content) ? this.state.clickedfilm.content : this.state.default.content}</p>
+                                <a href={linkURL}>
+                                    Watch free
                             </a>
-                            <a onClick={(e) => this.createRoom(e)}>
-                                Watch with your friends
+                                <a onClick={(e) => this.createRoom(e)}>
+                                    Watch with your friends
                             </a>
-                        </Contentdiv>
-                    </Slides>
-                </Container>
-            </Section>
-            <Rowx>
-                <h2 className="h23">Films</h2>
-                <Navbar>
-                    {this.state.films.map((item) => {
-                        return (
-                            <Column>
-                                <a onClick={(e) => this.handleClick(e, item)} >
-                                    <img src={item.imageURL} alt="" />
-                                </a>
+                            </Contentdiv>
+                        </Slides>
+                    </Container>
+                </Section>
+                <Rowx>
+                    <h2 className="h23">Films</h2>
+                    <Navbar>
+                        {this.state.films.map((item) => {
+                            return (
+                                <Column>
+                                    <a onClick={(e) => this.handleClick(e, item)} >
+                                        <img src={item.imageURL} alt="" />
+                                    </a>
 
-                            </Column>
-                        )
-                    })}
-                </Navbar>
-                <Prev>{'<'}</Prev>
-                <Next>{'>'}</Next>
-            </Rowx>
-        </Contain>
+                                </Column>
+                            )
+                        })}
+                    </Navbar>
+                    <Prev>{'<'}</Prev>
+                    <Next>{'>'}</Next>
+                </Rowx>
+            </Contain>
 
-    )
-}
+        )
+    }
 }
 
 export default Row;
