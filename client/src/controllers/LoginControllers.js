@@ -34,10 +34,11 @@ function LoginControllers() {
         console.log(res.data);
         window.localStorage.setItem("email", res.data.user.email);
         window.localStorage.setItem("name", res.data.user.name);
-        if (!window.localStorage.getItem("roomId")){
+        if (window.localStorage.getItem("roomId")) {
           window.location.href = `/watch/room/${window.localStorage.getItem("roomId")}`;
+        } else {
+          window.location.href = "/";
         }
-        window.location.href = "/";
       },
       (error) => {
         console.log(error);
