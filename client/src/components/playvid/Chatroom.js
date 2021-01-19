@@ -1,48 +1,20 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import Hls from "hls.js";
-import { Container, Row, Col } from "react-bootstrap";
-import io from "socket.io-client";
-const socket = io("http://localhost:6000");
-const messageContainer = document.getElementById("message-container");
-const messageForm = document.getElementById("send-container");
-const messageInput = document.getElementById("message-input");
+import Chat from "../Chat/Chat/Chat";
 
-function appendMessage(message) {
-  const messageElement = document.createElement("div");
-  messageElement.innerText = message;
-  messageContainer.append(messageElement);
-}
-
-const roomName = window.localStorage.room;
-
+var getParams = function (string) {
+  var params = [];
+  params = string.split("/");
+  console.log(params);
+  return params[params.length-1];
+};
 
 export default class Chatroom extends Component {
-    handleMessage(e) {
-      e.preventDefault();
-      const message = e.target.value;
-      socket.emit("send-chat-message", window.localStorage.roomId, message);
-    }
-
-    handlepause(e) {
-      const message = `want to pause`;
-      socket.emit("send-pause-message", window.localStorage.roomId, message);
-    }
-
   UNSAFE_componentWillMount() {
-<<<<<<< HEAD
-    const name = window.localStorage.getItem("name");
-    socket.on('room-created', room => {
-        window.localStorage.room = room
-        var roomName = room
-        socket.emit('new-user', roomName, name)
-      })
     const email = window.localStorage.getItem("email");
-=======
-    
-    const email = window.localStorage.getItem('email');
-    console.log(email)
->>>>>>> e58a3c250b525b3bc9a23cc2cc93b2e405eb7b91
+    window.localStorage.setItem("roomId",getParams(window.location.href));
+    console.log(window.location.href);
     if (email === null) {
       window.location.href = "/login";
     }
@@ -52,35 +24,10 @@ export default class Chatroom extends Component {
     this._onTouchInsidePlayer = this._onTouchInsidePlayer.bind(this);
   }
 
-  UNSAFE_componentDidMount() {
-
-<<<<<<< HEAD
-    this.socket.on("chat-message", (data) => {
-      appendMessage(`${data.name}: ${data.message}`);
-    });
-
-    this.socket.on("user-connected", (name) => {
-      appendMessage(`${name} connected`);
-    });
-
-    this.socket.on("user-disconnected", (name) => {
-      appendMessage(`${name} disconnected`);
-    });
-
-    const liveChannel = "quanle";
-    console.log("component did mount");
-    if (Hls.isSupported() && this.player) {
-      const streamURL = `http://localhost:3002/live/${liveChannel}/index.m3u8`;
-=======
-  constructor(props) {
-    super(props);
-    this._onTouchInsidePlayer = this._onTouchInsidePlayer.bind(this);
-  }
   componentDidMount() {
     const liveChannel = "quanle";
     if (Hls.isSupported() && this.player) {
-      const streamURL = `http://localhost:8000/live/${liveChannel}/index.m3u8`;
->>>>>>> e58a3c250b525b3bc9a23cc2cc93b2e405eb7b91
+      const streamURL = `http://localhost:8000/live/quanle/index.m3u8`;
       const video = this.player;
       const hls = new Hls();
       hls.loadSource(streamURL);
@@ -98,51 +45,35 @@ export default class Chatroom extends Component {
     }
   }
   render() {
-    // const style1 = {
-    //   width: "30%",
-    //   height: "100%",
-    //   background: "#000",
-    // };
-    // const style2 = {
-    //   width: "70%",
-    //   height: "100%",
-    //   margin: "0",
-    // };
     const style = {
-<<<<<<< HEAD
-        width : '100%',
-        height : '100%',
-        background : '#000',
+      width: '100%',
+      height: '100%',
+      background: '#000',
     }
-=======
-      width: "70%",
-      height: "100%",
-      background: "#000",
-    };
->>>>>>> e58a3c250b525b3bc9a23cc2cc93b2e405eb7b91
     return (
-            <PlayerWrapper>
-              <PlayerContent>
-                <video
-                  controls={true}
-                  ref={(player) => (this.player = player)}
-                  autoPlay={true}
-                  muted={true}
-                ></video>
-              </PlayerContent>
-            </PlayerWrapper>
-          /* <Col style={style1}>
-            <div id="message-container"></div>
-            <form id="send-container">
-              <input type="text" id="message-input"></input>
-              <button onSubmit={(e) => this.handleMessage(e)}>Send</button>
-              <button onClick={(e) => this.handlepause(e)}>Pause</button>
-            </form>
-          </Col> */
+      <PlayerWrapper>
+        <Column1>
+          <PlayerContent>
+            <video controls={true} style={style} ref={(player) => this.player = player} autoPlay={true} muted={true}></video>
+          </PlayerContent>
+        </Column1>
+        <Column2>
+          <Chat />
+        </Column2>
+      </PlayerWrapper>
     );
   }
 }
 
 const PlayerWrapper = styled.div`
+display: flex;
 position : relative ;`;
 const PlayerContent = styled.div``;
+const Column1 = styled.div`
+width: 70%;
+height: 100vh;
+`;
+const Column2 = styled.div`
+width: 30%;
+height: 100vh;
+`;

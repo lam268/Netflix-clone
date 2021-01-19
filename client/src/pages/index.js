@@ -20,7 +20,6 @@ class Main extends Component {
         indexControllers.getCurrentUser();
         const email = window.localStorage.getItem('email');
         const name = window.localStorage.getItem('name');
-
         if (email) {
             this.setState({
                 currentUser: {
