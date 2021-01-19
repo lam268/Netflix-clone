@@ -23,19 +23,20 @@ router.post("/room", (req, res) => {
 
 io.on("connection", (socket) => {
   socket.on("new-user", (room, name) => {
+    console.log(name);
     socket.join(room);
     rooms[room].users[socket.id] = name;
-    socket.to(room).broadcast.emit("user-connected", name);
+    socket.to(room).emit("user-connected", name);
   });
   socket.on("send-chat-message", (room, message) => {
-    socket.to(room).broadcast.emit("chat-message", {
+    socket.to(room).emit("chat-message", {
       message: message,
       name: rooms[room].users[socket.id],
     });
   });
   socket.on("send-pause-message", (room, message) => {
     console.log(message);
-    socket.to(room).broadcast.emit("chat-message", {
+    socket.to(room).emit("chat-message", {
       message: message,
       name: rooms[room].users[socket.id],
     });
@@ -49,6 +50,8 @@ io.on("connection", (socket) => {
     });
   });
 });
+
+server.listen(6000);
 
 function getUserRooms(socket) {
   return Object.entries(rooms).reduce((names, [name, room]) => {
