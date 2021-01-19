@@ -59,28 +59,6 @@ router.post('/register', async (request, response) => {
     } catch (err) {
         response.status(400).send(err);
     }
-
-    let mailOptions = {
-        from: process.env.EMAIL,
-        to: user.email,
-        subject: 'Welcome to Moiflix',
-        text: `Welcome to Moiflix
-        Please copy and paste the address below to verify your email address.
-        https://${request.headers.host}/verify-email?token=${emailToken}
-        `,
-        html: `
-            <h1>Hello</h1>
-            <p>Thanks for signing up Moiflix</p>
-            <p>Please click this link to verify your email address.</p>
-            <a href="https://https://${request.headers.host}/verify-email?token=${emailToken}">Verify your email</a> 
-        `
-    }
-    try {
-        await sgMailer.send(mailOptions);
-
-    } catch (error) {
-        console.log(error);
-    }
 });
 
 router.post('/login', async (request, response) => {
@@ -89,7 +67,6 @@ router.post('/login', async (request, response) => {
     const checkPassword = await bcrypt.compare(request.body.password, user.password);
 
     if (!checkPassword) return response.status(422).send('Email or Password is not correct');
-    // if (!user.confirmed) return response.status(422).send('Please confirmed your email');
     const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET, { expiresIn: 60 * 60 * 24 });
 
     request.session.currentUser = await {

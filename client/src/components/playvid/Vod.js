@@ -12,10 +12,9 @@ export default class Vod extends Component{
         this._onTouchInsidePlayer=this._onTouchInsidePlayer.bind(this);
     }
     componentDidMount(){
-        const liveChannel = 'quanle'
         console.log('component did mount');
         if(Hls.isSupported() && this.player) {
-            const streamURL = `http://localhost:3002/live/${liveChannel}/index.m3u8`;
+            const streamURL = `http://207.148.122.213:3003/hls/index.m3u8`;
             const video = this.player;
             const hls = new Hls();
             hls.loadSource(streamURL);

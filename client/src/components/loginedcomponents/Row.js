@@ -1,4 +1,3 @@
-  
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import axios from 'axios';
@@ -38,11 +37,11 @@ class Row extends Component {
     createRoom(e) {
         e.preventDefault();
 
-        axios.post('http://localhost:9000/api/chat/room',this.state)
+        axios.post('http://localhost:9000/api/chat/room', this.state)
             .then((res) => {
                 console.log(res.data)
-                window.localStorage.setItem('roomId',res.data.room);
-                window.location.href=`/watch/room/${res.data.room}`
+                window.localStorage.setItem('roomId', res.data.room);
+                window.location.href = `/watch/room/${res.data.room}`
             })
     }
 
@@ -66,7 +65,6 @@ class Row extends Component {
 
     render() {
         const linkURL = `http://localhost:3000/watch/${(this.state.clickedfilm.title) ? this.state.clickedfilm.title : this.state.default.title}`
-        
         return (
             <Contain>
                 <Section>

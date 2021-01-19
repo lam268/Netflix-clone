@@ -30,6 +30,7 @@ export default class Chatroom extends Component {
     }
 
   UNSAFE_componentWillMount() {
+<<<<<<< HEAD
     const name = window.localStorage.getItem("name");
     socket.on('room-created', room => {
         window.localStorage.room = room
@@ -37,6 +38,11 @@ export default class Chatroom extends Component {
         socket.emit('new-user', roomName, name)
       })
     const email = window.localStorage.getItem("email");
+=======
+    
+    const email = window.localStorage.getItem('email');
+    console.log(email)
+>>>>>>> e58a3c250b525b3bc9a23cc2cc93b2e405eb7b91
     if (email === null) {
       window.location.href = "/login";
     }
@@ -48,6 +54,7 @@ export default class Chatroom extends Component {
 
   UNSAFE_componentDidMount() {
 
+<<<<<<< HEAD
     this.socket.on("chat-message", (data) => {
       appendMessage(`${data.name}: ${data.message}`);
     });
@@ -64,6 +71,16 @@ export default class Chatroom extends Component {
     console.log("component did mount");
     if (Hls.isSupported() && this.player) {
       const streamURL = `http://localhost:3002/live/${liveChannel}/index.m3u8`;
+=======
+  constructor(props) {
+    super(props);
+    this._onTouchInsidePlayer = this._onTouchInsidePlayer.bind(this);
+  }
+  componentDidMount() {
+    const liveChannel = "quanle";
+    if (Hls.isSupported() && this.player) {
+      const streamURL = `http://localhost:8000/live/${liveChannel}/index.m3u8`;
+>>>>>>> e58a3c250b525b3bc9a23cc2cc93b2e405eb7b91
       const video = this.player;
       const hls = new Hls();
       hls.loadSource(streamURL);
@@ -92,10 +109,17 @@ export default class Chatroom extends Component {
     //   margin: "0",
     // };
     const style = {
+<<<<<<< HEAD
         width : '100%',
         height : '100%',
         background : '#000',
     }
+=======
+      width: "70%",
+      height: "100%",
+      background: "#000",
+    };
+>>>>>>> e58a3c250b525b3bc9a23cc2cc93b2e405eb7b91
     return (
             <PlayerWrapper>
               <PlayerContent>
