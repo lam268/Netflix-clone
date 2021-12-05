@@ -16,6 +16,11 @@ const filmSchema = new mongoose.Schema({
         max: 255,
         required: false,
     },
+    filmURL: {
+        type: String,
+        max: 2000,
+        require: true,
+    },
     gerne: {
         type: String,
         required: true,
