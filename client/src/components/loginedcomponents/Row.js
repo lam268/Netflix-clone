@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { setLink } from './reducers';
+let dispatch = useDispatch();
 
 class Row extends Component {
 
@@ -11,12 +14,14 @@ class Row extends Component {
             content: '',
             imageURL: '',
             gerne: '',
+            filmURL: ''
         },
         clickedfilm: {
             title: '',
             content: '',
             imageURL: '',
             gerne: '',
+            filmURL: ''
         },
         roomid: '',
     }
@@ -28,7 +33,8 @@ class Row extends Component {
             clickedfilm: {
                 title: item.title,
                 content: item.content,
-                imageURL: item.imageURL
+                imageURL: item.imageURL,
+                filmURL: item.filmURL,
             }
 
         })
@@ -45,16 +51,31 @@ class Row extends Component {
             })
     }
 
+    handleGetFilmButton(e, linkURL, filmURL) {
+        e.preventDefault();
+        console.log(filmURL)
+        dispatch(setLink(filmURL));
+        // window.location.href = linkURL;
+    }
+
     UNSAFE_componentWillMount() {
         axios.get('http://localhost:9000/api/film/')
             .then(data => {
                 console.log(data.data);
+                console.log(data.data.data[0].filmURL)
                 this.setState({
                     films: data.data.data,
                     default: {
                         title: data.data.data[0].title,
                         imageURL: data.data.data[0].imageURL,
-                        content: data.data.data[0].content
+                        content: data.data.data[0].content,
+                        filmURL: data.data.data[0].filmURL
+                    },
+                    clickedfilm: {
+                        title: data.data.data[0].title,
+                        imageURL: data.data.data[0].imageURL,
+                        content: data.data.data[0].content,
+                        filmURL: data.data.data[0].filmURL
                     }
                 });
             })
@@ -74,7 +95,7 @@ class Row extends Component {
                     <Contentdiv>
                                 <h2>{(this.state.clickedfilm.title) ? this.state.clickedfilm.title : this.state.default.title}</h2>
                                 <p>{(this.state.clickedfilm.content) ? this.state.clickedfilm.content : this.state.default.content}</p>
-                                <a href={linkURL}>
+                                <a onClick={(e) => this.handleGetFilmButton(e, linkURL, this.state?.clickedfilm?.filmURL)}>
                                     Watch free
                             </a>
                                 <a onClick={(e) => this.createRoom(e)}>
